@@ -1,0 +1,174 @@
+/* Footer.css */
+
+.footer {
+    color: black;
+    padding: 20px 0 0 0;
+    margin-top: 50px;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    
+  }
+  
+  .footer-logo {
+    flex: 1;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-logo-img {
+    max-width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-description {
+    font-size: 17px;
+  }
+  
+  .footer-links, .footer-social {
+    flex: 1;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-links h4, .footer-social h4 {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+  .footer-links h4, .footer-social h4 {
+    font-size: 30px;
+    margin-bottom: 10px;
+    position: relative; /* Ensure the pseudo-element is positioned correctly */
+    padding-bottom: 10px; /* Space for the line */
+  }
+  
+  .footer-links h4::after, .footer-social h4::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50%; /* Adjust width as needed */
+    height: 3px; /* Thickness of the line */
+    background-color: #007ACC; /* Line color */
+    transition: width 0.3s ease; /* Smooth transition effect */
+  }
+  
+  
+  
+  .footer-links ul {
+    list-style-type: none;
+    padding: 0;
+ 
+  }
+  
+  .footer-links ul li {
+    margin-bottom: 10px;
+    margin-top: 25px;
+  
+  }
+  
+  .footer-links ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+
+  }
+  
+  .footer-links ul li a:hover {
+    text-decoration: none;
+    color: #007ACC;
+  }
+  
+  .footer-social .social-icons {
+    display: flex;
+    justify-content: start;
+  }
+  
+  .footer-social .social-icon {
+    font-size: 30px;
+    margin: 0 10px;
+    color: black;
+    transition: color 0.3s;
+  }
+  .footer-social {
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    justify-content: flex-start; /* Align items to the start (left) */
+  }
+  .follow{
+    margin-bottom: 20px;
+  }
+  .footer-social .insta-icon {
+    color: #d9534f; /* Or any color you prefer */
+  }
+  .footer-social .whatsapp-icon {
+    color: #25D366; /* Or any color you prefer */
+  }
+  
+  .bottom {
+    margin-top: 30px;
+    text-align: center;
+    background-color: #efefef;
+    padding: 5px;
+  }
+  .bottom h6{
+    font-size: 16px;
+
+  }
+  /* Footer.css */
+
+/* Ensure these styles match your design */
+.footer-social {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-social .follow {
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+.whatsapp-icon a{
+  color: #25D366; /* WhatsApp green color */
+
+}
+
+.whatsapp-icon {
+  position: relative;
+}
+
+  @media screen and (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .footer-logo, .footer-links, .footer-social {
+      max-width: 100%;
+    }
+    .bottom h6{
+      font-size: 12px;
+  
+    }
+    .footer-logo-img {
+      max-width: 110px;
+      margin-bottom: 20px;
+    }
+    .footer-links h4::after, .footer-social h4::after {
+    
+      left: 40px;
+      bottom: 0;
+   
+    }
+  }
+  

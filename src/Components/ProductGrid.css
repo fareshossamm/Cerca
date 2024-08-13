@@ -1,0 +1,92 @@
+/* Grid Container */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns of equal width */
+  gap: 40px; /* Space between items */
+  padding: 20px; /* Space around the grid */
+}
+.product-grid-title{
+  text-align: center;
+  margin: 25px 0;
+  font-size: 40px;
+  text-transform: capitalize;
+  margin-top: 100px;
+
+}
+/* Product Card */
+.product-card {
+  border: none; /* Remove border for a cleaner look */
+  border-radius: 12px; /* Rounded corners */
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Shadow for a floating effect */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  display: flex;
+  flex-direction: column; /* Vertical layout */
+  cursor: pointer;
+  
+}
+
+/* Hover Effect for Product Card */
+.product-card:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Product Image */
+.product-image {
+  width: 100%;
+  height: 60%; /* Adjust height for uniformity */
+  object-fit: cover; /* Ensure the image covers the area */
+  border-bottom: 1px solid #eee; /* Light border below image */
+  transition: 0.7s;
+}
+.product-image:hover {
+ transform: scale(0.9);
+}
+
+/* Product Information */
+.product-info {
+  padding: 15px; /* Padding around the text */
+  flex: 1; /* Allow this section to grow */
+  display: flex;
+  flex-direction: column; /* Vertical layout */
+}
+
+/* Price Container */
+.price-container {
+  margin-bottom: 15px; /* Space below price */
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* 1 column for small screens */
+    gap: 20px; /* Space between items */
+    padding: 10px; /* Space around the grid */
+  }
+
+  .product-card {
+    margin-top: 20px; /* Reduced margin for smaller screens */
+  }
+
+  .product-image {
+    height: 50%; /* Adjust height for smaller screens */
+  }
+  .product-info {
+    padding: 10px; /* Reduced padding for smaller screens */
+  }
+
+  .price-container {
+    margin-bottom: 10px; /* Adjust margin for smaller screens */
+  }
+
+}

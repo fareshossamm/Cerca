@@ -1,0 +1,169 @@
+/* Cart.css */
+.cart-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-top: 60px;
+}
+
+h2 {
+  font-size: 50px;
+  margin-bottom: 50px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+h2 span.color {
+  color: #007ACC; /* Blue color for emphasis */
+}
+
+.empty {
+  font-size: 35px;
+  font-weight: bold;
+  color: red;
+  text-transform: capitalize;
+  margin: 20%;
+  text-align: center;
+}
+
+.cart-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.cart-item-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.remove {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #dc3545; /* Red color for remove button */
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  align-self: flex-end;
+}
+
+.cart-item-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 20px 0 10px 0;
+}
+
+.cart-item-details {
+  font-size: 18px;
+  color: #555;
+  margin: 5px 0;
+}
+
+.price-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 10px;
+}
+
+.new-price {
+  font-size: 27px;
+  color: #007ACC; /* Blue color for new price */
+}
+.egp{
+  color: black;
+}
+.total-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  padding: 20px;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9; /* Light background for total price */
+}
+
+.total {
+  color: red;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.total-price h3 {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+@media (max-width: 768px) {
+  .total-price h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+
+  }
+  .total {
+    font-size: 22px;
+  }
+}
+
+.cart-btn, .btn-success {
+  background-color: #fff;
+  color: #28a745; /* Green color */
+  border: 2px solid #28a745; /* Green border */
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.wa-icon{
+  font-size: 22px;
+}
+.cart-btn:hover, .btn-success:hover {
+  background-color: #28a745; /* Green background */
+  color: #fff; /* White text */
+  border: #28a745;
+}
+
+.error {
+  color: #dc3545; /* Red color for errors */
+  margin-top: 20px;
+  font-size: 1.1rem;
+  text-align: center;
+}

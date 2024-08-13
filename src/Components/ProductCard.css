@@ -1,0 +1,79 @@
+/* ProductCard.css */
+
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  text-align: center; /* Center text within the card */
+  max-width: 450px; /* Adjust based on design needs */
+  margin: auto; /* Center card if in a flex container */
+}
+
+.product-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd; /* Add a separator between image and info */
+}
+
+.product-info {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.product-title {
+
+  color: #333; 
+}
+
+.price-container {
+  margin-bottom: 15px;
+display: flex;
+justify-content: space-around; 
+}
+
+
+
+.add-to-cart {
+  background-color: #007ACC;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex; /* Aligns the button content */
+  align-items: center;
+  justify-content: center;
+  font-size: 1em; /* Ensure text size is readable */
+  text-transform: uppercase; /* Make text uppercase for uniformity */
+}
+
+.add-to-cart:hover {
+  background-color: #007ACC;
+}
+
+.add-to-cart svg {
+  margin-right: 5px; /* Space between icon and text */
+}
+
+/* Success Modal Styles */
+.success-modal .modal-content {
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.success-modal .modal-header {
+  border-bottom: none;
+}
+
+.success-modal .modal-footer {
+  border-top: none;
+}

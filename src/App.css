@@ -1,3 +1,4 @@
+/* General Styles */
 .App {
   text-align: center;
 }
@@ -14,7 +15,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #282c34; /* Dark background for the header */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +36,49 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.logo-img {
+  width: 100px;
+}
+
+.carousel-caption h3 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.carousel-caption p {
+  font-size: 1.25rem;
+}
+
+.carousel-item img {
+  height: 400px; /* Adjust height as needed */
+  object-fit: cover;
+}
+
+/* Dark Mode Styles */
+.dark-mode body {
+  background-color: #1e1e1e; /* Darker background for dark mode */
+  color: #eee; /* Light text color */
+}
+.dark-mode .App-header {
+  background-color: #1e1e1e; /* Darker background for dark mode */
+  color: #eee; /* Light text color */
+}
+
+.dark-mode .App-link {
+  color: #61dafb; /* Maintain link color in dark mode */
+}
+
+.dark-mode .carousel-caption h3 {
+  color: #eee; /* Light text color for captions */
+}
+
+.dark-mode .carousel-caption p {
+  color: #ddd; /* Slightly lighter text color for captions */
+}
+
+/* Ensure carousel images are adjusted for dark mode if needed */
+.dark-mode .carousel-item img {
+  /* You may adjust image styles if needed */
 }

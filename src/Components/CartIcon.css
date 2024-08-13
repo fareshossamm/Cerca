@@ -1,0 +1,13 @@
+/* CartIcon.css */
+
+.cart-icon {
+    font-size: 1.5em;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .cart-icon:hover {
+    color: #007ACC; /* Or any color you prefer */
+  }
+  

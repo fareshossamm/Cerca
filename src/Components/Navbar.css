@@ -1,0 +1,84 @@
+/* Logo styling */
+.logo-img {
+  height: 40px;
+  /* Adjust the height to fit your design */
+  margin-right: 20px;
+  /* Space between logo and navbar items */
+}
+
+@media(max-width:768px) {
+  .logo-img {
+    margin-left: 15px;
+  }
+}
+
+/* Navbar styling for small screens */
+.navbar-toggler {
+  border: none;
+  /* Remove border for cleaner look */
+}
+
+@media(max-width:768px) {
+  .navbar-toggler {
+    margin-right: 15px;
+  }
+}
+
+/* Adjust spacing and alignment for nav links */
+.navbar-nav .nav-link {
+  padding: 10px 15px;
+  /* Add padding */
+  display: flex;
+  /* Center content inside the link */
+  align-items: center;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: black;
+}
+
+
+
+
+/* Ensure spacing between nav items */
+.navbar-nav .nav-item {
+  margin-left: 15px;
+}
+
+
+
+
+.navbar-light .navbar-nav .nav-link {
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: #007ACC;
+}
+@media(max-width:768px) {
+  .navbar-light .navbar-nav .nav-link {
+   margin-top: 15px;
+  }
+  
+}
+/* Navbar.css */
+.cart-icon-container {
+  position: relative;
+}
+
+.cart-quantity {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0.2em 0.5em;
+  font-size: 15px;
+}
+
+#cart {
+  font-size: 25px;
+}
