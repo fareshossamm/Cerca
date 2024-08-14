@@ -91,6 +91,43 @@ const Checkout = () => {
     <div className="checkout container mt-5">
       <h2 className="text-center mb-4">Checkout</h2>
       <Row>
+      <Col md={6}>
+          <div className="order-summary">
+            <h3>Order Summary</h3>
+            {cart.length === 0 ? (
+              <p>No items in the cart.</p>
+            ) : (
+              cart.map((item, index) => (
+                <Card key={index} className="mb-3">
+                  <Card.Body>
+                    <Card.Title>{item.title}</Card.Title>
+                    <Card.Text><strong>Color:</strong> {item.color}</Card.Text>
+                    <Card.Text><strong>Size:</strong> {item.size}</Card.Text>
+                    <Card.Text><strong>Quantity:</strong> {item.quantity}</Card.Text>
+                    {cart.length > 0 && cart[0]?.quantity > 1 && (
+              <Form.Group controlId="formCustomDetails">
+                  <Form.Label className='custom-tittle'>
+                    Please provide size and color for each t-shirt:
+                  </Form.Label>
+                <Form.Control className='textarea custom'
+                  as="textarea"
+                  rows={3}
+                  value={customDetails}
+                  onChange={(e) => setCustomDetails(e.target.value)}
+                  placeholder="e.g., Size L, Color Red ; Size M, Color Blue"
+                  isInvalid={!!errors.customDetails}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.customDetails}
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
+                  </Card.Body>
+                </Card>
+              ))
+            )}
+          </div>
+        </Col>
         <Col md={6}>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formName">
@@ -155,43 +192,7 @@ const Checkout = () => {
             </Card>
           </Form>
         </Col>
-        <Col md={6}>
-          <div className="order-summary">
-            <h3>Order Summary</h3>
-            {cart.length === 0 ? (
-              <p>No items in the cart.</p>
-            ) : (
-              cart.map((item, index) => (
-                <Card key={index} className="mb-3">
-                  <Card.Body>
-                    <Card.Title>{item.title}</Card.Title>
-                    <Card.Text><strong>Color:</strong> {item.color}</Card.Text>
-                    <Card.Text><strong>Size:</strong> {item.size}</Card.Text>
-                    <Card.Text><strong>Quantity:</strong> {item.quantity}</Card.Text>
-                    {cart.length > 0 && cart[0]?.quantity > 1 && (
-              <Form.Group controlId="formCustomDetails">
-                  <Form.Label className='custom-tittle'>
-                    Please provide size and color for each t-shirt:
-                  </Form.Label>
-                <Form.Control className='textarea custom'
-                  as="textarea"
-                  rows={3}
-                  value={customDetails}
-                  onChange={(e) => setCustomDetails(e.target.value)}
-                  placeholder="e.g., Size L, Color Red ; Size M, Color Blue"
-                  isInvalid={!!errors.customDetails}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.customDetails}
-                </Form.Control.Feedback>
-              </Form.Group>
-            )}
-                  </Card.Body>
-                </Card>
-              ))
-            )}
-          </div>
-        </Col>
+        
       </Row>
 
       {/* Confirmation Modal */}
