@@ -39,7 +39,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const [color, setColor] = useState('');
   const [size, setSize] = useState('');
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);  
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [whatsappLink, setWhatsappLink] = useState('');
@@ -96,10 +96,16 @@ const ProductDetails = () => {
       setError('Please select color, size, and quantity. Ensure the selected color is in stock.');
       return;
     }
-
+  
     setError('');
-    navigate('/checkout', { state: { cart: [{ ...product, color, size, quantity }], totalPrice: product.newPrice * quantity } });
+    navigate('/checkout', {
+      state: {
+        cart: [{ ...product, color, size, quantity }],
+        totalPrice: product.newPrice * quantity,
+      }
+    });
   };
+  
 
   const handleColorSelect = (selectedColor) => {
     if (product.images[selectedColor] !== "out of stock") {

@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { FaEnvelope, FaPhone, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { init, send } from "emailjs-com";
 import { Spinner } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import the default stylesheet for toast
 import "./Contact.css";
 import ContactImage from "./Imgs/0/conact.svg";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 // Initialize EmailJS
-init("PCCXB3f2MWb-iS__1");
+init("Xef_ZmdWDtSJVfU9I");
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -23,16 +25,7 @@ function Contact() {
     message: "",
   });
 
-  const [formStatus, setFormStatus] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Loading state
-
-  useEffect(() => {
-    if (showAlert) {
-      const timer = setTimeout(() => setShowAlert(false),2000);
-      return () => clearTimeout(timer);
-    }
-  }, [showAlert]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,36 +71,24 @@ function Contact() {
 
     if (validateForm()) {
       setIsLoading(true); // Show loader
-      send("service_jcwdubp", "template_gyg14mn", formData)
+      send("service_zqw7s5i", "template_okr4jzg", formData)
         .then((response) => {
           setIsLoading(false); // Hide loader
-          setFormStatus("Message sent successfully!");
+          toast.success("Message sent successfully!"); // Show success toast
           setFormData({ name: "", email: "", message: "" });
           setFormErrors({ name: "", email: "", message: "" }); // Clear errors on success
-          setShowAlert(true); // Show success alert
         })
         .catch((err) => {
           setIsLoading(false); // Hide loader
-          setFormStatus("Failed to send message. Please try again.");
-          setShowAlert(true); // Show error alert
+          toast.error("Failed to send message. Please try again."); // Show error toast
         });
     }
   };
 
-  const isSuccess = formStatus.includes("success");
-  const alertClass = isSuccess ? "alert-success" : "alert-error";
-
   return (
     <div className="contact-us container my-5">
-      {/* Success/Error Alert */}
-      {showAlert && (
-        <div className={`alert-container ${showAlert ? "alert-show" : "alert-hide"} ${alertClass}`}>
-          <div className="alert-custom">
-            {isSuccess ? <FaCheckCircle className="me-2" /> : <FaExclamationCircle className="me-2" />}
-            {formStatus}
-          </div>
-        </div>
-      )}
+      {/* Toast Container */}
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
 
       <div className="contact-content row">
         <div className="col-lg-6 d-flex justify-content-center align-items-center">

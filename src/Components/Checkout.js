@@ -1,217 +1,230 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Modal, Button, Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { Modal, Button, Form, Row, Col, Card } from 'react-bootstrap';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import emailjs from 'emailjs-com';
 import './Checkout.css';
 
-emailjs.init("PCCXB3f2MWb-iS__1");
-
-const colorOptions = ["Black", "White", "RoyalBlue"];
 const governorates = [
-  "Cairo", "Alexandria", "Giza", "Dakahlia", "Sharqia", "Kafr El Sheikh", "Qalyubia",
-  "Aswan", "Luxor", "Suez", "Port Said", "Red Sea", "New Valley", "Minya", "Beni Suef"
+  'Cairo', 'Alexandria', 'Giza', 'Aswan', 'Assiut', 'Beni Suef', 'Dakahlia',
+  'Damietta', 'Faiyum', 'Gharbia', 'Ismailia', 'Kafr El Sheikh', 'Minya',
+  'Monufia', 'New Valley', 'Port Said', 'Qalyubia', 'Qena', 'Red Sea',
+  'Sharqia', 'Suez', 'South Sinai', 'North Sinai', 'Luxor'
 ];
 
 const Checkout = () => {
-  const { state } = useLocation();
-  const { cart, totalPrice } = state || {};
-
-  const initialColors = cart.map(item => Array(item.quantity).fill(''));
+  const location = useLocation();
+  const { cart = [], totalPrice = 0 } = location.state || {};
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
-  const [colors, setColors] = useState(initialColors);
-  const [errors, setErrors] = useState({});
+  const [address, setAddress] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [customDetails, setCustomDetails] = useState('');
 
   const validateForm = () => {
-    const newErrors = {};
-    if (!name) newErrors.name = 'Name is required.';
-    if (!email) newErrors.email = 'Email is required.';
-    if (!address) newErrors.address = 'Address is required.';
-    if (!phone || !/^\d{11}$/.test(phone)) newErrors.phone = 'Please enter a valid 11-digit phone number.';
-
-    // Validate color selection
-    const colorErrors = colors.map(colorArr => colorArr.every(color => color !== ''));
-    if (colorErrors.some(hasColor => !hasColor)) {
-      newErrors.colors = 'Please select a color for each item.';
+    const errors = {};
+    if (!name) errors.name = 'Name is required.';
+    if (!email) errors.email = 'Email is required.';
+    if (!phone) errors.phone = 'Phone number is required.';
+    if (!address) errors.address = 'Address is required.';
+    if (cart.length > 0 && cart[0]?.quantity > 1 && !customDetails.trim()) {
+      errors.customDetails = 'Please provide size and color details for each t-shirt.';
     }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return errors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
-
-    setShowConfirmModal(true);
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+    setShowModal(true);
   };
 
   const handleConfirm = () => {
-    const emailData = {
-      cartItems: cart.map((item, index) => ({
-        title: item.title,
-        price: item.newPrice * item.quantity,
-        size: item.size,
-        quantity: item.quantity,
-        color: colors[index], // Use selected color here
-        image: item.img
-      })),
-      totalPrice: totalPrice,
-      name: name,
-      email: email,
-      address: address,
-      phone: phone
-    };
-
-    emailjs.send("service_jcwdubp", 'template_e1999ya', emailData, 'PCCXB3f2MWb-iS__1')
-      .then((result) => {
-        console.log('Email sent successfully:', result.text);
-        setShowConfirmModal(false);
-        setShowModal(true);
-        setName('');
-        setEmail('');
-        setAddress('');
-        setPhone('');
-        setColors(cart.map(() => []));
+    emailjs.send('service_zqw7s5i', 'template_batzn9h', {
+      title: cart.map(item => item.title).join(', ') || 'N/A',
+      color: cart.map(item => item.color).join(', ') || 'N/A',
+      size: cart.map(item => item.size).join(', ') || 'N/A',
+      quantity: cart.map(item => item.quantity).join(', ') || 0,
+      customDetails,
+      totalPrice,
+      to_name: name,
+      to_email: email,
+      to_phone: phone,
+      address
+    }, 'Xef_ZmdWDtSJVfU9I')
+      .then((response) => {
+        console.log('Success:', response);
+        setShowModal(false);
+        toast.success('Order confirmed successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }, (error) => {
-        console.log('Email sending error:', error.text);
-        setErrors({ global: 'There was an error sending your order. Please try again.' });
-        setShowConfirmModal(false);
+        console.log('Error:', error);
+        setShowModal(false);
+        toast.error('Failed to send email. Please try again.', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
   };
 
-  const handleCancel = () => {
-    setShowConfirmModal(false);
-  };
-
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
-
-  const handleColorChange = (itemIndex, colorIndex, color) => {
-    const newColors = [...colors];
-    newColors[itemIndex][colorIndex] = color;
-    setColors(newColors);
-  };
-
   return (
-    <div className="checkout container my-4">
-      <h1 className="text-center mb-4">Checkout</h1>
-      <Form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          {cart.map((item, index) => (
-            <div key={index} className="mb-4 p-3 border rounded">
-              <p><strong>Product:</strong> {item.title}</p>
-              <p><strong>Price:</strong> EGP {item.newPrice.toFixed()}</p>
-              <p><strong>Size:</strong> {item.size}</p>
-              <p><strong>Quantity:</strong> {item.quantity}</p>
+    <div className="checkout container mt-5">
+      <h2 className="text-center mb-4">Checkout</h2>
+      <Row>
+        <Col md={6}>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formName">
+              <Form.Control
+                type="text"
+                placeholder="your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                isInvalid={!!errors.name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group controlId="formEmail">
+              <Form.Control
+                type="email"
+                placeholder="your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                isInvalid={!!errors.email}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.email}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group controlId="formPhone">
+              <Form.Control
+                type="text"
+                placeholder="phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                isInvalid={!!errors.phone}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.phone}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group controlId="formAddress">
+              <Form.Control
+                as="select"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                isInvalid={!!errors.address}
+                className="select-style"
+              >
+                <option value="">Select Governorate</option>
+                {governorates.map((gov, index) => (
+                  <option key={index} value={gov}>{gov}</option>
+                ))}
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {errors.address}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-              {Array.from({ length: item.quantity }).map((_, colorIndex) => (
-                <div key={colorIndex} className="mb-3">
-                  <p>Item {colorIndex + 1}:</p>
-                  <div className="color-picker">
-                    {colorOptions.map(option => (
-                      <div
-                        key={option}
-                        className={`color-circle ${colors[index][colorIndex] === option ? 'selected' : ''}`}
-                        style={{ backgroundColor: option.toLowerCase() }}
-                        onClick={() => handleColorChange(index, colorIndex, option)}
-                      />
-                    ))}
-                  </div>
-                  {errors.colors && colors[index][colorIndex] === '' && (
-                    <div className="error-message">Color selection is required for this item.</div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ))}
-          {errors.colors && <div className="error-message">{errors.colors}</div>}
-        </div>
-
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="form-control"
-          />
-          {errors.name && <div className="error-message">{errors.name}</div>}
-        </div>
-        <div className="form-group">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="form-control"
-          />
-          {errors.email && <div className="error-message">{errors.email}</div>}
-        </div>
-        <div className="form-group">
-          <select
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="form-control"
-          >
-            <option value="">Select Address</option>
-            {governorates.map(gov => (
-              <option key={gov} value={gov}>{gov}</option>
-            ))}
-          </select>
-          {errors.address && <div className="error-message">{errors.address}</div>}
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Phone Number (11 digits)"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="form-control"
-          />
-          {errors.phone && <div className="error-message">{errors.phone}</div>}
-        </div>
-
-        <div className="button-container">
-          <Button type="submit" variant="primary">Place Order</Button>
-          <p className='total'><strong className='str'>Total Price :</strong> EGP {totalPrice.toFixed()}</p>
-        </div>
-      </Form>
+            <Button className='bg-success w-100 m-2' variant="primary" type="submit">Submit</Button>
+            <Card className="mt-3">
+              <Card.Body>
+              <Card.Title className='price-tittle :'>Total Price : <span className="price-text">EGP {totalPrice.toFixed()}</span></Card.Title>
+              </Card.Body>
+            </Card>
+          </Form>
+        </Col>
+        <Col md={6}>
+          <div className="order-summary">
+            <h3>Order Summary</h3>
+            {cart.length === 0 ? (
+              <p>No items in the cart.</p>
+            ) : (
+              cart.map((item, index) => (
+                <Card key={index} className="mb-3">
+                  <Card.Body>
+                    <Card.Title>{item.title}</Card.Title>
+                    <Card.Text><strong>Color:</strong> {item.color}</Card.Text>
+                    <Card.Text><strong>Size:</strong> {item.size}</Card.Text>
+                    <Card.Text><strong>Quantity:</strong> {item.quantity}</Card.Text>
+                    {cart.length > 0 && cart[0]?.quantity > 1 && (
+              <Form.Group controlId="formCustomDetails">
+                  <Form.Label className='custom-tittle'>
+                    Please provide size and color for each t-shirt:
+                  </Form.Label>
+                <Form.Control className='textarea custom'
+                  as="textarea"
+                  rows={3}
+                  value={customDetails}
+                  onChange={(e) => setCustomDetails(e.target.value)}
+                  placeholder="e.g., Size L, Color Red ; Size M, Color Blue"
+                  isInvalid={!!errors.customDetails}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.customDetails}
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
+                  </Card.Body>
+                </Card>
+              ))
+            )}
+          </div>
+        </Col>
+      </Row>
 
       {/* Confirmation Modal */}
-      <Modal show={showConfirmModal} onHide={handleCancel}>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Your Order</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure you want to place this order?</p>
+          <p>Are you sure you want to confirm this order?</p>
+          <div className="order-details">
+            {cart.map((item, index) => (
+              <div key={index} className="order-item">
+                <p><strong>Title:</strong> {item.title}</p>
+                <p><strong>Color:</strong> {item.color}</p>
+                <p><strong>Size:</strong> {item.size}</p>
+                <p><strong>Quantity:</strong> {item.quantity}</p>
+                <p><strong className='details-capital'>customDetails:</strong> {customDetails}</p>
+                <hr />
+              </div>
+            ))}
+            <p><strong>Total Price:</strong> EGP {totalPrice.toFixed()}</p>
+          </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCancel}>Cancel</Button>
-          <Button variant="primary" onClick={handleConfirm}>Confirm</Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button className='bg-success' variant="primary" onClick={handleConfirm}>
+            Confirm
+          </Button>
         </Modal.Footer>
       </Modal>
-
-      {/* Success Modal */}
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Order Placed Successfully</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Thank you for your order! We will contact you shortly.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleModalClose}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+      <ToastContainer />
     </div>
   );
 };

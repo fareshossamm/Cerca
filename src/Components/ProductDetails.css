@@ -155,15 +155,16 @@
   margin-bottom: 15px;
 }
 
-.custom-modal-title {
+.modal-title {
   font-size: 1.5rem;
-  color: #03fa41;
+  color: white;
   margin: 0;
 }
 
-.custom-modal-body {
-  font-size: 1rem;
+.modal-body {
+  font-size: 16px;
   color: #333;
+  font-weight: bold;
 }
 
 .custom-modal-footer {

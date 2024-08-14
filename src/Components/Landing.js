@@ -2,14 +2,12 @@ import React from "react";
 import "./Landing.css";
 import heroImage from "../Components/Imgs/0/landing.webp"; // Update with the correct path to your image
 import ProductGrid from './ProductGrid'; // Import the ProductGrid component
-import ImageUpload from '../Components/ImageUpload';
 import ScrollToTopButton from '../Components/ScrollToTopButton'; // Import the ScrollToTopButton component
 
 const Landing = () => {
   return (
     
     <div className="landing-container">
-            <ImageUpload />
       <section className="hero-section">
         <div className="hero-text">
           <h1>

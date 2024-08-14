@@ -46,7 +46,7 @@ const AppContent = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/products" element={<ProductGrid />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/product/:id" element={<ProductDetails   />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />

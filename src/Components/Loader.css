@@ -22,8 +22,8 @@
 
 .jimu-primary-loading:after {
   left: 19.992px;
-  -webkit-animation-delay: 0.64s !important; /* Increased delay */
-  animation-delay: 0.64s !important; /* Increased delay */
+  -webkit-animation-delay: 0.4s !important; /* Increased delay */
+  animation-delay: 0.4s !important; /* Increased delay */
 }
 
 .jimu-primary-loading:before,
@@ -42,8 +42,8 @@
   position: absolute;
   right: calc(50% - 6.8px);
   top: calc(50% - 16px);
-  -webkit-animation-delay: 0.32s !important; /* Increased delay */
-  animation-delay: 0.32s !important; /* Increased delay */
+  -webkit-animation-delay: 0.3s !important; /* Increased delay */
+  animation-delay: 0.3s !important; /* Increased delay */
 }
 
 @-webkit-keyframes loading-keys-app-loading {
